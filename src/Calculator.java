@@ -7,8 +7,7 @@ public class Calculator {
 
         double totalGPA = 0.0;
 
-        for (int i = 0; i < gradeClasses.size(); i++) {
-            GradeClass gradeClass = gradeClasses.get(i);
+        for (GradeClass gradeClass : gradeClasses) {
             GPAList.add(getGPA(gradeClass));
         }
 

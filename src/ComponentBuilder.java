@@ -17,7 +17,7 @@ public class ComponentBuilder {
         return panel;
     }
 
-    public JButton createCalculateButton(JFrame frame, JPanel gradesPanel) {
+    public JButton createCalculateButton(JPanel gradesPanel) {
         JButton calculateButton = createButton("Calculate!");
 
         calculateButton.setBounds(150, 390, 160, 40);

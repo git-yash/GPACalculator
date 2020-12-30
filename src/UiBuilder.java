@@ -12,7 +12,7 @@ public class UiBuilder {
 
         JPanel gradesPanel = componentBuilder.createGradesPanel();
         JPanel toolbarPanel = componentBuilder.createToolbarPanel(frame, gradesPanel);
-        JButton calculateButton = componentBuilder.createCalculateButton(frame, gradesPanel);
+        JButton calculateButton = componentBuilder.createCalculateButton(gradesPanel);
 
         panel.add(toolbarPanel);
         panel.add(gradesPanel);
