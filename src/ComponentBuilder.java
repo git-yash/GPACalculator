@@ -1,5 +1,6 @@
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 public class ComponentBuilder {
     private int currentIndex = 7;
@@ -18,13 +19,18 @@ public class ComponentBuilder {
 
     public JButton createCalculateButton(JFrame frame, JPanel gradesPanel) {
         JButton calculateButton = createButton("Calculate!");
-        Calculator calculator = new Calculator();
 
         calculateButton.setBounds(150, 390, 160, 40);
 
         calculateButton.addActionListener(actionEvent -> {
-            double averageGPA = calculator.getAverageGPA(gradesPanel);
-//            JOptionPane.showMessageDialog(null, "Your GPA is: " + averageGPA);
+            Calculator calculator = new Calculator();
+            try {
+                double averageGPA = calculator.getAverageGPA(createGradeClass(gradesPanel));
+                JOptionPane.showMessageDialog(null, "Your GPA is: " + averageGPA);
+            }
+            catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(null, "INVALID INPUT");
+            }
         });
 
         return calculateButton;
@@ -101,4 +107,20 @@ public class ComponentBuilder {
         return removeButton;
     }
 
+    private ArrayList<GradeClass> createGradeClass(JPanel gradesPanel) {
+        ArrayList<GradeClass> gradeClasses = new ArrayList<>();
+
+        for (int i = 0; i < gradesPanel.getComponentCount(); i++) {
+            JPanel classPanel = (JPanel) gradesPanel.getComponent(i);
+            JTextField gradeInput = (JTextField) classPanel.getComponent(1);
+            JCheckBox isWeighted = (JCheckBox) classPanel.getComponent(2);
+
+            if (!gradeInput.getText().equals("")) {
+                GradeClass gradeClass = new GradeClass(Double.parseDouble(gradeInput.getText()), isWeighted.isSelected());
+                gradeClasses.add(gradeClass);
+            }
+        }
+
+        return gradeClasses;
+    }
 }

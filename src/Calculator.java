@@ -1,19 +1,15 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 
 public class Calculator {
-    public double getAverageGPA(JPanel gradesPanel) {
+    public double getAverageGPA(ArrayList<GradeClass> gradeClasses) {
         ArrayList<Double> GPAList = new ArrayList<>();
-        ArrayList<Double> gradesList = searchTextFieldsForGrades(gradesPanel);
-        ArrayList<Boolean> isWeightedList = searchCheckBoxInputs(gradesPanel);
 
         double totalGPA = 0.0;
 
-        for (int i = 0; i < gradesList.size(); i++) {
-            for (int j = 0; j < isWeightedList.size(); j++) {
-                GPAList.add(getGPA(gradesList.get(i), isWeightedList.get(i)));
-            }
+        for (int i = 0; i < gradeClasses.size(); i++) {
+            GradeClass gradeClass = gradeClasses.get(i);
+            GPAList.add(getGPA(gradeClass));
         }
 
         for (Double aDouble : GPAList) {
@@ -23,8 +19,9 @@ public class Calculator {
         return totalGPA / GPAList.size();
     }
 
-    private double getGPA(double grade, boolean isWeighted) {
+    private double getGPA(GradeClass gradeClass) {
         double GPA = 0.0;
+        double grade = gradeClass.grade;
         String strGrade = String.valueOf(grade);
         String[] strListGPA = String.valueOf(grade).split("");
         ArrayList<String> arrayListGPA = new ArrayList<>(Arrays.asList(strListGPA));
@@ -44,7 +41,7 @@ public class Calculator {
             GPA += 1 + amountToAdd;
         }
 
-        if (isWeighted) {
+        if (gradeClass.isWeighted) {
             GPA += 1;
         }
 
@@ -53,46 +50,5 @@ public class Calculator {
         }
 
         return GPA;
-    }
-
-    private ArrayList<Double> searchTextFieldsForGrades(JPanel gradesPanel) {
-        ArrayList<Double> gradesList = new ArrayList<>();
-        JPanel validClassPanels = getValidClassPanels(gradesPanel);
-
-        for (int i = 0; i < validClassPanels.getComponentCount(); i++) {
-            JPanel classPanel = (JPanel) validClassPanels.getComponent(i);
-            JTextField gradeInput = (JTextField) classPanel.getComponent(1);
-            gradesList.add(Double.parseDouble(gradeInput.getText()));
-        }
-
-        return gradesList;
-    }
-
-    private ArrayList<Boolean> searchCheckBoxInputs(JPanel gradesPanel) {
-        ArrayList<Boolean> isWeightedList = new ArrayList<>();
-        JPanel validClassPanels = getValidClassPanels(gradesPanel);
-
-        for (int i = 0; i < validClassPanels.getComponentCount(); i++) {
-            JPanel classPanel = (JPanel) validClassPanels.getComponent(i);
-            JCheckBox checkBox = (JCheckBox) classPanel.getComponent(2);
-            isWeightedList.add(checkBox.isSelected());
-        }
-
-        return isWeightedList;
-    }
-
-    private JPanel getValidClassPanels(JPanel gradesPanel) {
-        JPanel validClassPanels = new JPanel();
-
-        for (int i = 0; i < gradesPanel.getComponentCount(); i++) {
-            JPanel classPanel = (JPanel) gradesPanel.getComponent(i);
-            JTextField gradeInput = (JTextField) classPanel.getComponent(1);
-
-            if (!gradeInput.getText().equals("")) {
-                validClassPanels.add(classPanel);
-            }
-        }
-
-        return validClassPanels;
     }
 }
