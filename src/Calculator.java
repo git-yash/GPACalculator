@@ -57,9 +57,10 @@ public class Calculator {
 
     private ArrayList<Double> searchTextFieldsForGrades(JPanel gradesPanel) {
         ArrayList<Double> gradesList = new ArrayList<>();
+        JPanel validClassPanels = getValidClassPanels(gradesPanel);
 
-        for (int i = 0; i < gradesPanel.getComponentCount(); i++) {
-            JPanel classPanel = (JPanel) gradesPanel.getComponent(i);
+        for (int i = 0; i < validClassPanels.getComponentCount(); i++) {
+            JPanel classPanel = (JPanel) validClassPanels.getComponent(i);
             JTextField gradeInput = (JTextField) classPanel.getComponent(1);
             gradesList.add(Double.parseDouble(gradeInput.getText()));
         }
@@ -69,13 +70,29 @@ public class Calculator {
 
     private ArrayList<Boolean> searchCheckBoxInputs(JPanel gradesPanel) {
         ArrayList<Boolean> isWeightedList = new ArrayList<>();
+        JPanel validClassPanels = getValidClassPanels(gradesPanel);
 
-        for (int i = 0; i < gradesPanel.getComponentCount(); i++) {
-            JPanel classPanel = (JPanel) gradesPanel.getComponent(i);
+        for (int i = 0; i < validClassPanels.getComponentCount(); i++) {
+            JPanel classPanel = (JPanel) validClassPanels.getComponent(i);
             JCheckBox checkBox = (JCheckBox) classPanel.getComponent(2);
             isWeightedList.add(checkBox.isSelected());
         }
 
         return isWeightedList;
+    }
+
+    private JPanel getValidClassPanels(JPanel gradesPanel) {
+        JPanel validClassPanels = new JPanel();
+
+        for (int i = 0; i < gradesPanel.getComponentCount(); i++) {
+            JPanel classPanel = (JPanel) gradesPanel.getComponent(i);
+            JTextField gradeInput = (JTextField) classPanel.getComponent(1);
+
+            if (!gradeInput.getText().equals("")) {
+                validClassPanels.add(classPanel);
+            }
+        }
+
+        return validClassPanels;
     }
 }

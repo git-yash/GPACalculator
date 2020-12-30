@@ -24,7 +24,7 @@ public class ComponentBuilder {
 
         calculateButton.addActionListener(actionEvent -> {
             double averageGPA = calculator.getAverageGPA(gradesPanel);
-            JOptionPane.showMessageDialog(null, "Your GPA is: " + averageGPA);
+//            JOptionPane.showMessageDialog(null, "Your GPA is: " + averageGPA);
         });
 
         return calculateButton;
